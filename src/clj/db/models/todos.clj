@@ -1,22 +1,7 @@
 (ns db.models.todos
   (:require [honeysql.core :as sql]
             [honeysql.helpers :as h]
-            [db.core :as db]
-            [entities.todo :as todo]))
-
-(defn query
-  [query-fn & params]
-  (let [q (sql/format (apply query-fn params))]
-    (->> q
-         db/query
-         (map todo/from-db))))
-
-(defn execute!
-  [query-fn & params]
-  (let [formatted-params (map #(if (map? %1) (todo/to-db %1) %1) params)
-        q (sql/format (apply query-fn formatted-params))]
-    (->> q
-         db/execute!)))
+            [db.core :as db]))
 
 (defn get-by-id
   [id]
