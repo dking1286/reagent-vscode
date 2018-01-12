@@ -1,9 +1,9 @@
 (ns repl.migration
   (:require [ragtime.repl :as repl]
-            [db.migration :as migration]
             [clojure.java.io :as io]
             [clojure.string :as string]
-            [clojure.edn :refer [read-string]]
+            [clojure.edn :as edn]
+            [db.migration :as migration]
             [utils.string :as string-util]))
 
 (defn migrate!
@@ -18,7 +18,7 @@
   [migration-tag]
   (-> migration-tag
       string-util/remove-left-pad-zeros
-      read-string
+      edn/read-string
       inc
       str
       (string-util/left-pad-zeros 3)))

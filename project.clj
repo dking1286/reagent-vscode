@@ -16,6 +16,8 @@
                  [org.clojure/java.jdbc "0.7.5"]
                  [honeysql "0.9.1"]
                  [ragtime "0.7.2"]
+                 [ring "1.6.3"]
+                 [compojure "1.6.0"]
                  
                  ;; Frontend dependencies
                  [reagent "0.8.0-alpha2"]
