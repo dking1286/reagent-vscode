@@ -14,6 +14,7 @@
                  [environ "1.1.0"]
                  [org.postgresql/postgresql "9.4.1212.jre7"]
                  [org.clojure/java.jdbc "0.7.5"]
+                 [org.clojure/data.json "0.2.6"]
                  [honeysql "0.9.1"]
                  [ragtime "0.7.2"]
                  [ring "1.6.3"]

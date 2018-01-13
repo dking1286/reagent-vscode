@@ -4,21 +4,18 @@
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.lint :refer [wrap-lint]]
-            [ring.middleware.reload :refer [wrap-reload]])
+            [ring.middleware.reload :refer [wrap-reload]]
+            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+            [api.middleware.json :refer [wrap-json-request-body]]
+            [api.routes :refer [root-handler]])
   (:gen-class))
 
 (def environment (get env :environment))
 (def port (edn/read-string (or (get env :api-port) (get env :port))))
 
-(defn handler
-  [req]
-  {:headers {"content-type" "text/plain"}
-   :status 200
-   :body "Running"})
-
 (def handler-with-middleware
-  (cond-> handler
-          (= environment "dev") wrap-lint))
+  (-> root-handler
+      wrap-json-request-body))
 
 (def app
   (if (= environment "dev")
@@ -31,7 +28,9 @@
     (go
       (println (str "Server starting on port " port))
       (run-jetty app
-        {:port port :join? false
+        {:port port
+         :join? false
+         :async? true
          :configurator (fn [server] (go (>! output server)))}))
     output))
 

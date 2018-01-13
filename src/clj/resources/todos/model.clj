@@ -1,6 +1,6 @@
-(ns db.models.todos
-  (:require [honeysql.core :as sql]
-            [honeysql.helpers :as h]
+(ns resources.todos.model
+  (:require [honeysql.helpers :as h]
+            [lib.honeysql :refer [returning]]
             [db.core :as db]))
 
 (defn get-by-id
@@ -18,4 +18,5 @@
   [data]
   (-> (h/insert-into :todos)
       (h/columns :title :body)
-      (h/values [[(:title data) (:body data)]])))
+      (h/values [[(:title data) (:body data)]])
+      (returning :*)))
