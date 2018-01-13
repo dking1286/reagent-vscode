@@ -11,17 +11,23 @@
    :user (:db-user env)
    :password (:db-password env)})
 
+(defn- param->db-style
+  [param]
+  (if (map? param)
+    (clj->db param)
+    param))
+
 (defn query
   [query-fn & params]
-  (let [q (sql/format (apply query-fn params))]
-    (->> (apply query-fn params)
+    (->> (map param->db-style params)
+         (apply query-fn)
          sql/format
          (jdbc/query connection)
-         (map db->clj))))
+         (map db->clj)))
 
 (defn execute!
   [query-fn & params]
-  (->> (map #(if (map? %1) (clj->db %1) %1) params)
+  (->> (map param->db-style params)
        (apply query-fn)
        sql/format
        (jdbc/execute! connection)))

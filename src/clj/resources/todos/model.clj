@@ -1,22 +1,34 @@
 (ns resources.todos.model
-  (:require [honeysql.helpers :as h]
+  (:require [honeysql.helpers :refer :all]
             [lib.honeysql :refer [returning]]
             [db.core :as db]))
 
 (defn get-by-id
   [id]
-  (-> (h/select :*)
-      (h/from :todos)
-      (h/where [:= :id id])))
+  (-> (select :*)
+      (from :todos)
+      (where [:= :id id])))
 
 (defn list
   []
-  (-> (h/select :*)
-      (h/from :todos)))
+  (-> (select :*)
+      (from :todos)))
 
 (defn create
   [data]
-  (-> (h/insert-into :todos)
-      (h/columns :title :body)
-      (h/values [[(:title data) (:body data)]])
+  (-> (insert-into :todos)
+      (columns :title :body)
+      (values [[(:title data) (:body data)]])
       (returning :*)))
+
+(defn update-by-id
+  [id data]
+  (-> (update :todos)
+    (sset data)
+    (where [:= :id id])
+    (returning :*)))
+
+(defn delete-by-id
+  [id]
+  (-> (delete-from :todos)
+      (where [:= :id id])))

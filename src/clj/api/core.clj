@@ -5,7 +5,6 @@
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.lint :refer [wrap-lint]]
             [ring.middleware.reload :refer [wrap-reload]]
-            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [api.middleware.json :refer [wrap-json-request-body]]
             [api.routes :refer [root-handler]])
   (:gen-class))
