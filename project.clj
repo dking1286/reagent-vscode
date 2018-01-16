@@ -11,6 +11,7 @@
                  [org.clojure/core.async "0.3.465"]
 
                  ;; Backend dependencies
+                 [me.raynes/fs "1.4.6"]
                  [environ "1.1.0"]
                  [org.postgresql/postgresql "9.4.1212.jre7"]
                  [org.clojure/java.jdbc "0.7.5"]

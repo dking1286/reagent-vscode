@@ -1,0 +1,5 @@
+(ns components.name.core)
+
+(defn name
+  []
+  [:div.name__container])
