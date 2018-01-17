@@ -1,5 +1,5 @@
-(ns cljs.user)
+(ns cljs.user
+  (:require [state.core]))
 
-(defn hello
-  []
-  (println "Hello world"))
+(def state state.core/state)
+(def dispatch state.core/dispatch)

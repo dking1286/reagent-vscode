@@ -1,7 +1,6 @@
 (ns resources.todos.model
   (:require [honeysql.helpers :refer :all]
-            [lib.honeysql :refer [returning]]
-            [db.core :as db]))
+            [lib.honeysql :refer [returning]]))
 
 (defn get-by-id
   [id]
