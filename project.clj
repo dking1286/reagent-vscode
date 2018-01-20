@@ -11,10 +11,6 @@
                  [org.clojure/core.async "0.3.465"]
 
                  ;; Backend dependencies
-                 [me.raynes/fs "1.4.6"]
-                 [popen "0.3.1"]
-                 [hawk "0.2.11"]
-                 [clj-time "0.14.2"]
                  [environ "1.1.0"]
                  [org.postgresql/postgresql "9.4.1212.jre7"]
                  [org.clojure/java.jdbc "0.7.5"]
@@ -23,14 +19,20 @@
                  [ragtime "0.7.2"]
                  [ring "1.6.3"]
                  [compojure "1.6.0"]
+                 [com.cognitect/transit-clj "0.8.300"]
                  
                  ;; Frontend dependencies
                  [reagent "0.8.0-alpha2"]
+                 [com.cognitect/transit-cljs "0.8.243"]
                  
                  ;; Build and development dependencies
                  [org.clojure/tools.nrepl "0.2.10"]
                  [figwheel-sidecar "0.5.14"]
-                 [com.cemerick/piggieback "0.2.2"]]
+                 [com.cemerick/piggieback "0.2.2"]
+                 [me.raynes/fs "1.4.6"]
+                 [popen "0.3.1"]
+                 [hawk "0.2.11"]
+                 [clj-time "0.14.2"]]
 
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]

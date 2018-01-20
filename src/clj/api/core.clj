@@ -5,7 +5,9 @@
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.lint :refer [wrap-lint]]
             [ring.middleware.reload :refer [wrap-reload]]
-            [api.middleware.json :refer [wrap-json-request-body]]
+            [api.middleware.request :refer [wrap-json-request-body]]
+            [api.middleware.response :refer [wrap-json-response-body]]
+            [api.middleware.cors :refer [wrap-cors]]
             [api.routes :refer [root-handler]])
   (:gen-class))
 
@@ -14,23 +16,25 @@
 
 (def handler-with-middleware
   (-> root-handler
-      wrap-json-request-body))
+      wrap-json-response-body
+      wrap-json-request-body
+      wrap-cors))
 
 (def app
   (if (= environment "dev")
-    (wrap-reload #'handler-with-middleware {:dirs ["src/clj"]})
+    (-> (wrap-reload #'handler-with-middleware {:dirs ["src/clj"]})
+        wrap-lint)
     handler-with-middleware))
 
 (defn run-app
   []
   (let [output (chan)]
-    (go
-      (println (str "Server starting on port " port))
-      (run-jetty app
-        {:port port
-         :join? false
-         :async? true
-         :configurator (fn [server] (go (>! output server)))}))
+    (println (str "Server starting on port " port))
+    (run-jetty app
+               {:port port
+                :join? false
+                :async? true
+                :configurator (fn [server] (go (>! output server)))})
     output))
 
 (defn -main
