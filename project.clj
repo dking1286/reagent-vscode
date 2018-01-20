@@ -23,6 +23,7 @@
                  
                  ;; Frontend dependencies
                  [reagent "0.8.0-alpha2"]
+                 [cljs-http "0.1.44"]
                  [com.cognitect/transit-cljs "0.8.243"]
                  
                  ;; Build and development dependencies
