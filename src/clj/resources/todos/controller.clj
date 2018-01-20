@@ -1,6 +1,7 @@
 (ns resources.todos.controller
   (:require [clojure.core.async :refer [chan go <! >!]]
-            [ring.util.response :refer :all]
+            [ring.util.response :refer [response status]]
+            [api.util.response :refer :all]
             [db.core :refer [query execute!]]
             [resources.todos.model :as todos]))
 
@@ -15,7 +16,9 @@
   (fn [req respond raise]
     (let [todos (query todos/get-by-id id)]
       (respond
-       (-> (response {:data (first todos)}))))))
+        (if (empty? todos)
+          (not-found)
+          (response {:data (first todos)}))))))
 
 (defn create
   [req respond raise]

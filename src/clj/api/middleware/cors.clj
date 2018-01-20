@@ -2,11 +2,13 @@
   (:require [environ.core :refer [env]]
             [ring.util.response :refer :all]))
 
+(def frontend-url (:frontend-url env))
+
 (defn- wrapped-respond
   [respond]
   (fn [response]
     (-> response
-        (header "Access-Control-Allow-Origin" "http://localhost:9090")
+        (header "Access-Control-Allow-Origin" frontend-url)
         respond)))
 
 (defn wrap-cors

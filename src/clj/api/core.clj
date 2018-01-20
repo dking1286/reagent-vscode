@@ -30,11 +30,8 @@
   []
   (let [output (chan)]
     (println (str "Server starting on port " port))
-    (run-jetty app
-               {:port port
-                :join? false
-                :async? true
-                :configurator (fn [server] (go (>! output server)))})
+    (run-jetty app {:port port :join? false :async? true
+                    :configurator (fn [server] (go (>! output server)))})
     output))
 
 (defn -main
