@@ -5,3 +5,8 @@
   []
   (-> (r/response "Not found")
       (r/status 404)))
+
+(defn bad-request
+  [message]
+  (-> (r/response (or message "Bad request"))
+      (r/status 400)))

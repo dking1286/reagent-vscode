@@ -41,7 +41,7 @@
             [lein-shell "0.5.0"]
             [cider/cider-nrepl "0.16.0"]]
 
-  :source-paths ["src/clj" "src/cljc"]
+  :source-paths ["src/clj" "src/cljc" "src/cljs"]
 
   :target-path "target/%s"
 
@@ -81,7 +81,7 @@
    "client-postbuild" ;; Cleans up temporary files generated during cljs compilation
    ["shell" "rm" "-rf" "./resources/public/js/compiled/out"]
    
-   "build-client:prod" ;; Builds the cljs client in production mode
+   "build-client:prod"
    ["do" "clean"
          ["with-profile" "prod" "cljsbuild" "once"]
          ["client-postbuild"]]

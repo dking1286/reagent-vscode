@@ -1,8 +1,11 @@
 (ns cljs.user
-  (:require [state.core]
+  (:require [clojure.core.async :refer [<!] :refer-macros [go]]
+            [state.core]
             [services.network]))
 
 (def state state.core/state)
 (def dispatch state.core/dispatch)
 
-(def get services.network/get)
+(defn net-request
+  [& args]
+  (go (println (<! (apply services.network/request args)))))

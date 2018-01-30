@@ -4,11 +4,11 @@
 
 (defn io-nodes-valid?
   [node-list]
-  (->> nodes-list
+  (->> node-list
        (map :id)
        distinct
        count
-       (= (count nodes-list))))
+       (= (count node-list))))
 
 (defn create-nodes-map
   [node-list]
