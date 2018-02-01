@@ -28,6 +28,7 @@
                  
                  ;; Build and development dependencies
                  [org.clojure/tools.nrepl "0.2.10"]
+                 [cljfmt "0.5.7"]
                  [figwheel-sidecar "0.5.14"]
                  [com.cemerick/piggieback "0.2.2"]
                  [me.raynes/fs "1.4.6"]
