@@ -39,6 +39,7 @@
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
             [lein-sass "0.4.0"]
+            [lein-ring "0.12.3"]
             [lein-shell "0.5.0"]
             [cider/cider-nrepl "0.16.0"]]
 
@@ -52,6 +53,10 @@
   :repl-options {:port 9091
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
+  :ring {:handler api.core/app
+         :async? true
+         :adapter {:async? true}}
+
   :figwheel {:server-port 9090
              :css-dirs ["resources/public/css"]}
 
@@ -61,6 +66,10 @@
                              :asset-path "js/compiled/out"
                              :output-to "resources/public/js/compiled/main.js"
                              :output-dir "resources/public/js/compiled/out"}}}}
+
+  :sass {:command :sass
+         :src "resources/sass"
+         :output-dir "resources/public/css"}
                              
   :profiles
   {:dev {:env {:environment "dev"}
@@ -76,8 +85,15 @@
           
   :aliases
   {"repl:dev" ;; Starts the repl in development mode
+   ["with-profile" "+dev,+local-dev" "repl"]
+
+   "api:dev"
+   ["with-profile" "+dev,+local-dev" "ring" "server-headless"]
+
+   "figwheel:dev"
    ["do" "clean"
-         ["with-profile" "+dev,+local-dev" "repl"]]
+         ["with-profile" "+dev,+local-dev" "figwheel"]]
+
          
    "client-postbuild" ;; Cleans up temporary files generated during cljs compilation
    ["shell" "rm" "-rf" "./resources/public/js/compiled/out"]
@@ -86,6 +102,8 @@
    ["do" "clean"
          ["with-profile" "prod" "cljsbuild" "once"]
          ["client-postbuild"]]
+
+  
    
    "build-api:prod"      
    ["do" ["with-profile" "prod" "uberjar"]]})

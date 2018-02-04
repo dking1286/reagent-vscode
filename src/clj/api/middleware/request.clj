@@ -25,7 +25,6 @@
 (defn wrap-json-request-body
   [handler]
   (fn [req respond raise]
-    (println req)
     (cond
       (or (= (:request-method req) :get)
           (= (:request-method req) :delete))

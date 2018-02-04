@@ -5,6 +5,7 @@
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.lint :refer [wrap-lint]]
             [ring.middleware.reload :refer [wrap-reload]]
+            [api.middleware.development :refer [dev-only]]
             [api.middleware.request :refer [wrap-json-request-body]]
             [api.middleware.response :refer [wrap-json-response-body]]
             [api.middleware.cors :refer [wrap-cors]]
@@ -14,17 +15,14 @@
 (def environment (get env :environment))
 (def port (edn/read-string (or (get env :api-port) (get env :port))))
 
-(def handler-with-middleware
-  (-> root-handler
-      wrap-json-response-body
-      wrap-json-request-body
-      wrap-cors))
+(def middleware
+  (comp
+    (dev-only wrap-lint)
+    wrap-cors
+    wrap-json-request-body
+    wrap-json-response-body))
 
-(def app
-  (if (= environment "dev")
-    (-> (wrap-reload #'handler-with-middleware {:dirs ["src/clj"]})
-        wrap-lint)
-    handler-with-middleware))
+(def app (middleware root-handler))
 
 (defn run-app
   []

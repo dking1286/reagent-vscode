@@ -1,9 +1,6 @@
 (ns api.middleware.development
-  (:require [clojure.pprint :refer [pprint]]
-            [ring.middleware.lint :refer [wrap-lint]]))
+  (:require [environ.core :refer [env]]))
 
-(defn wrap-request-logger
-  [handler]
-  (fn [req]
-    (pprint req)
-    (handler req)))
+(defn dev-only
+  [middleware]
+  (if (= "dev" (:environment env)) middleware identity))
