@@ -11,7 +11,7 @@
    :user (:db-user env)
    :password (:db-password env)})
 
-(defn- param->db-style
+(defn param->db-style
   [param]
   (if (map? param)
     (clj->db param)

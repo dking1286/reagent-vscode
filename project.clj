@@ -41,9 +41,11 @@
             [lein-sass "0.4.0"]
             [lein-ring "0.12.3"]
             [lein-shell "0.5.0"]
+            [com.jakemccrary/lein-test-refresh "0.12.0"]
             [cider/cider-nrepl "0.16.0"]]
 
-  :source-paths ["src/clj" "src/cljc" "src/cljs"]
+  :source-paths ["src/clj" "src/cljc" "src/cljs"
+                 "test/clj" "test/cljc" "test/cljs"]
 
   :target-path "target/%s"
 
@@ -52,6 +54,8 @@
 
   :repl-options {:port 9091
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+
+  :test-refresh {:changes-only true}
 
   :ring {:handler api.core/app
          :async? true

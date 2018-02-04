@@ -23,9 +23,9 @@
 (defn update-by-id
   [id data]
   (-> (update :todos)
-    (sset data)
-    (where [:= :id id])
-    (returning :*)))
+      (sset data)
+      (where [:= :id id])
+      (returning :*)))
 
 (defn delete-by-id
   [id]
