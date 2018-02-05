@@ -1,6 +1,8 @@
 .lein*
 .nrepl-port
+.sass-cache
 figwheel_server.log
 target
 resources/public/js/compiled
+resources/public/css/compiled
 profiles.clj

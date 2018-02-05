@@ -49,7 +49,7 @@
   :target-path "target/%s"
 
   :clean-targets ^{:protect false}
-  ["resources/public/js/compiled" "resources/css/compiled" :target-path]
+  ["resources/public/js/compiled" "resources/public/css/compiled" :target-path]
 
   :repl-options {:port 9091
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
@@ -72,7 +72,7 @@
 
   :sass {:command :sass
          :src "resources/sass"
-         :output-dir "resources/public/css"}
+         :output-directory "resources/public/css/compiled"}
                              
   :profiles
   {:dev {:env {:environment "dev"}
@@ -93,9 +93,8 @@
    "api:dev"
    ["with-profile" "+dev,+local-dev" "ring" "server-headless"]
 
-   "figwheel:dev"
-   ["do" "clean"
-         ["with-profile" "+dev,+local-dev" "figwheel"]]
+   "sass:dev"
+   ["sass" "auto"]
 
          
    "client-postbuild" ;; Cleans up temporary files generated during cljs compilation
@@ -107,6 +106,5 @@
          ["client-postbuild"]]
 
   
-   
    "build-api:prod"      
    ["do" ["with-profile" "prod" "uberjar"]]})
