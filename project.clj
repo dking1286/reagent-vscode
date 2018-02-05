@@ -44,8 +44,7 @@
             [com.jakemccrary/lein-test-refresh "0.12.0"]
             [cider/cider-nrepl "0.16.0"]]
 
-  :source-paths ["src/clj" "src/cljc" "src/cljs"
-                 "test/clj" "test/cljc" "test/cljs"]
+  :source-paths ["src"]
 
   :target-path "target/%s"
 
@@ -65,8 +64,8 @@
              :css-dirs ["resources/public/css"]}
 
   :cljsbuild
-  {:builds {:app {:source-paths ["src/cljs" "src/cljc"]
-                  :compiler {:main reagent-vscode.core
+  {:builds {:app {:source-paths ["src"]
+                  :compiler {:main frontend.core
                              :asset-path "js/compiled/out"
                              :output-to "resources/public/js/compiled/main.js"
                              :output-dir "resources/public/js/compiled/out"}}}}
